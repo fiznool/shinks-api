@@ -1,0 +1,32 @@
+{
+  "name": "shinker-api",
+  "version": "1.0.0",
+  "description": "Backend API for the shinker app.",
+  "main": "api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create": "claudia create --name shinker --version development --region eu-west-1 --api-module api --policies policies --configure-db",
+    "update": "claudia update --version development",
+    "simulate": "claudia test-lambda",
+    "release": "claudia set-version --version production",
+    "claudia": "claudia",
+    "start": "ntl"
+  },
+  "author": "Tom Spencer <tom.spencer@studiozeffa.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "claudia": "^1.7.1",
+    "ntl": "^1.1.3"
+  },
+  "files": [
+    "api.js",
+    "hashid.js"
+  ],
+  "dependencies": {
+    "claudia-api-builder": "^1.6.0",
+    "knex": "^0.11.10",
+    "pg": "^6.1.0",
+    "shortid": "^2.2.6",
+    "valid-url": "^1.0.9"
+  }
+}
