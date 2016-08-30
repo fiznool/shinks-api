@@ -35,7 +35,9 @@ api.get('/links', function(req) {
     return knex
       .select('hash as id', 'url', 'created_at')
       .from('urls')
-      .orderBy('urls.id', 'desc');
+      .orderBy('urls.id', 'desc')
+      .offset(0)
+      .limit(30);
   }));
 }, { success: 200, error: 200, apiKeyRequired: true });
 
@@ -65,8 +67,10 @@ api.post('/links', function(req) {
     throw new ApiError('Bad Request: Validation error: not a valid URL: ' + req.body.url);
   }
 
+  const hasCustomHash = 'id' in req.body;
+
   const item = {
-    hash: hashid.generate(4),
+    hash: req.body.id || hashid.generate(4),
     url: req.body.url
   };
 
@@ -78,9 +82,23 @@ api.post('/links', function(req) {
       .then(results => {
         const item = results && results[0];
         if(!item) {
-          throw new Error('Something bad happened, please try again!');
+          throw new Error('Service temporarily unavailable, please try again.');
         }
         return item;
+      }, err => {
+        if(err.message && err.message.indexOf('violates unique constraint "urls_hash_uniq"') > 0) {
+          // Could not insert: hash already used.
+          if(hasCustomHash) {
+            // User-specified hash is already present in database.
+            err = new ApiError('Bad Request: Validation error: ID already used: ' + req.body.id);
+
+          } else {
+            // Otherwise, throw a general error.
+            err = new Error('Service temporarily unavailable, please try again.');
+          }
+        }
+
+        throw err;
       });
   }));
 
