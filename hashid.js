@@ -1,21 +1,14 @@
 'use strict';
 
 /**
- * The default alphabet is 25 numbers and lowercase letters.
+ * The default alphabet consists of alphanumeric characters.
  * Any numbers that look like letters and vice versa are removed:
  * 1 l, 0 o.
  * Also the following letters are not present, to prevent any
  * expletives: cfhistu
  */
-const ALPHABET = '23456789abdegjkmnpqrvwxyz';
+const ALPHABET = '23456789ABDEGJKMNPQRVWXYZabdegjkmnpqrvwxyz';
 const ALPHABET_LENGTH = ALPHABET.length;
-
-// Governs the length of the ID.
-// With an alphabet of 25 chars,
-// a length of 8 gives us 25^8 or
-// 152,587,890,625 possibilities.
-// Should be enough...
-const ID_LENGTH = 8;
 
 const HashID = {};
 
@@ -26,9 +19,9 @@ const HashID = {};
  * so it is up to you to check for uniqueness.
  * @return {String} friendly ID.
  */
-HashID.generate = function() {
+HashID.generate = function(length) {
   var rtn = '';
-  for (var i = 0; i < ID_LENGTH; i++) {
+  for (var i = 0; i < length; i++) {
     rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET_LENGTH));
   }
   return rtn;

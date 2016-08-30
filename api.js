@@ -66,7 +66,7 @@ api.post('/links', function(req) {
   }
 
   const item = {
-    hash: hashid.generate(),
+    hash: hashid.generate(4),
     url: req.body.url
   };
 

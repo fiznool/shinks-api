@@ -23,10 +23,10 @@
     "hashid.js"
   ],
   "dependencies": {
-    "claudia-api-builder": "^1.6.0",
-    "knex": "^0.11.10",
-    "pg": "^6.1.0",
-    "shortid": "^2.2.6",
-    "valid-url": "^1.0.9"
+    "claudia-api-builder": "1.6.0",
+    "knex": "0.11.10",
+    "pg": "6.1.0",
+    "shortid": "2.2.6",
+    "valid-url": "1.0.9"
   }
 }
